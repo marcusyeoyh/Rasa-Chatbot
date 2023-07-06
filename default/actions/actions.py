@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
@@ -6,6 +7,11 @@ import sqlite3
 from sqlite3 import Error
 from prettytable import PrettyTable
 from fuzzywuzzy import process
+
+config_file = os.path.join(os.path.dirname(__file__), "config.json")
+with open(config_file, "r") as file:
+    config = json.load(file)
+    database_path = config["database_path"]
 
 class QueryBrandType(Action):
     def name(self) -> Text:
@@ -17,7 +23,7 @@ class QueryBrandType(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         slot_value = next(tracker.get_latest_entity_values("brand_type"), None)
@@ -67,7 +73,7 @@ class QueryAllTransactions(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         # Step 1: Fetch the brand options from the database
@@ -103,7 +109,7 @@ class QueryAllProducts(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         # Step 1: Fetch the brand options from the database
@@ -152,7 +158,7 @@ class QueryAllInformation(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         # Step 1: Fetch the brand options from the database
@@ -187,7 +193,7 @@ class QueryAllBrands(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         # Step 1: Fetch the brand options from the database
@@ -222,7 +228,7 @@ class QueryTag(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
@@ -271,7 +277,7 @@ class QueryTransactionsTag(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
@@ -320,7 +326,7 @@ class QueryProductsTag(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
@@ -376,7 +382,7 @@ class RedirectPage(Action):
         else:
             page_number = None
         
-        connection = sqlite3.connect("C:\\Users\\u\\Desktop\\Intern 2023\\default\\db\\database1.db")
+        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         slot_name = "ProductID"
