@@ -47,11 +47,6 @@ rules:
   - intent: find_tag
   - action: query_tag
 
-- rule: find all transactions by tag
-  steps:
-  - intent: find_transactions_tag
-  - action: query_transactions_tag
-
 - rule: find all products by tag
   steps:
   - intent: find_products_tag

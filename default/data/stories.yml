@@ -43,6 +43,13 @@ stories:
     - resource_type: Shower
   - action: query_transactions_tag
 
+- story: find all products by tag
+  steps:
+  - intent: find_products_tag
+    entities:
+    - resource_type: Shower
+  - action: query_products_tag
+
 - story: find top
   steps:
   - intent: find_top

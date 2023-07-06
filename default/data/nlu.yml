@@ -124,6 +124,15 @@ nlu:
     - [Body](tag_type) tag transactions
     - display all [Shower](tag_type) tag transactions
     - display all [Body](tag_type) tag transactions
+    - show all transactions with the [Shower](tag_type) tag
+    - display all transactions with the [Shower](tag_type) tag
+    - show transactions with the [Shower](tag_type) tag
+    - display transactions with the [Shower](tag_type) tag
+    - show all transactions with the tag [Shower](tag_type)
+    - display all transactions with the tag [Shower](tag_type)
+    - show transactions with the tag [Shower](tag_type)
+    - display transactions with the tag [Shower](tag_type)
+
 
 - intent: find_products_tag
   examples: |
@@ -135,6 +144,14 @@ nlu:
     - [Body](tag_type) tag products
     - display all [Shower](tag_type) tag products
     - display all [Body](tag_type) tag products
+    - show all products with the [Shower](tag_type) tag
+    - display all products with the [Shower](tag_type) tag
+    - show products with the [Shower](tag_type) tag
+    - display products with the [Shower](tag_type) tag
+    - show all products with the tag [Body](tag_type)
+    - display all products with the tag [Body](tag_type)
+    - show products with the tag [Body](tag_type)
+    - display products with the tag [Body](tag_type)
 
 
 - intent: find_tag
