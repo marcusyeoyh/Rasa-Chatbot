@@ -402,5 +402,40 @@ class RedirectPage(Action):
             response = "Redirect Incorrect"
 
         dispatcher.utter_message(response)
+        connection.close()
+
+        return []
+    
+class RedirectPage(Action):
+    def name(self) -> Text:
+        return "query_top"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        slot_value = next(tracker.get_latest_entity_values("top_number_of_hits"), None)
+        
+        connection = sqlite3.connect(database_path)
+        cursor = connection.cursor()
+
+        # Fetch all available product IDs from the database
+        select_query = f"SELECT TransactionID, Quantity FROM StoreTransaction GROUP BY TransactionID ORDER BY Quantity DESC LIMIT {slot_value}"
+        cursor.execute(select_query)
+        rows = cursor.fetchall()
+
+
+        rows_dict = []
+        for row in rows:
+            row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+            rows_dict.append(row_dict)
+
+        response_data = {"table": rows_dict}
+
+        response_json = json.dumps(response_data)
+        dispatcher.utter_message(response_json)
+        connection.close()
 
         return []

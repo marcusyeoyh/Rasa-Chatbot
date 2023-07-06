@@ -197,6 +197,16 @@ nlu:
     - i would like to close the application
     - i would like to close the app
 
+- intent: find_top
+  examples: |
+    - find me the top [3](top_number_of_hits) transactions
+    - i want to see the top [3](top_number_of_hits) transactions
+    - show me the top [3](top_number_of_hits) transactions
+    - show me top [3](top_number_of_hits)
+    - i want to see [3](top_number_of_hits) transactions
+    - what are the top [3](top_number_of_hits) transactions
+    - what transactions are in the top [3](top_number_of_hits)
+
     
 - lookup: brand_type
   examples: |
@@ -213,6 +223,15 @@ nlu:
     - ProductID4
     - ProductID5
     - ProductID6
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+
+- lookup: top_number_of_hits
+  examples: |
     - 1
     - 2
     - 3

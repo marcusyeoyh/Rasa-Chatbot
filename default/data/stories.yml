@@ -42,3 +42,10 @@ stories:
     entities:
     - resource_type: Shower
   - action: query_transactions_tag
+
+- story: find top
+  steps:
+  - intent: find_top
+    entities:
+    - resource_type: 3
+  - actions: query_top

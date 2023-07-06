@@ -18,11 +18,13 @@ intents:
   - default_text
   - end_bot
   - end_app
+  - find_top
 
 entities:
   - brand_type
   - tag_type
   - page_number
+  - top_number_of_hits
 
 slots:
   brand_type:
@@ -45,6 +47,13 @@ slots:
     mappings:
       - type: from_entity
         entity: page_number
+
+  top_number_of_hits:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: top_number_of_hits
 
 responses:
   utter_ask_brand:
@@ -76,6 +85,7 @@ actions:
   - query_transactions_tag
   - query_products_tag
   - redirect_page
+  - query_top
 
 session_config:
   session_expiration_time: 60
