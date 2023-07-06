@@ -198,9 +198,11 @@ namespace BaseWPFApp.View
 
             // Add the message bubble to the ResultsPanel
             ResultsPanel.Children.Add(messageBubble);
-
+            if (table.Columns.Contains("ProductId"))
+            {
+                DisplayProductButtons(table);
+            }
             // Display buttons for each unique ProductId
-            DisplayProductButtons(table);
         }
 
         private void DisplayProductButtons(DataTable table)
