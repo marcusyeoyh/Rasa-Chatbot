@@ -1,0 +1,6 @@
+[
+  {
+    "name": "table",
+    "pattern": "(\\bStoreTransaction\\b|\\bProductItem\\b)"
+  }
+]

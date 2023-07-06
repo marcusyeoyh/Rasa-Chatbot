@@ -1,0 +1,82 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - bot_challenge
+  - ask_product
+  - inform_brand
+  - find_all_transactions
+  - find_all_products
+  - test_custom_action
+  - find_all_info
+  - find_all_brands
+  - find_transactions_tag
+  - find_products_tag
+  - find_tag
+  - page_redirect
+  - default_text
+  - end_bot
+  - end_app
+
+entities:
+  - brand_type
+  - tag_type
+  - page_number
+
+slots:
+  brand_type:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: brand_type
+
+  tag_type:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: tag_type
+
+  page_number:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: page_number
+
+responses:
+  utter_ask_brand:
+  - text: "What brand are you looking for?"
+
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_are_you_ok:
+  - text: "It appears that you have input the default text. Perhaps you would like to ask a question?"
+
+  utter_iamabot:
+  - text: "I am not a human, I am a Rasa Chatbot!"
+
+  utter_end_bot:
+  - text: "Please confirm if you would like to close the chatbot:"
+  
+  utter_end_app:
+  - text: "Please confirm if you would like to close the APP:"
+
+actions: 
+  - query_brand_type
+  - query_all_transactions
+  - query_all_products
+  - custom_action_test
+  - query_all_information
+  - query_unique_brands
+  - query_tag
+  - query_transactions_tag
+  - query_products_tag
+  - redirect_page
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

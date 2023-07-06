@@ -1,0 +1,78 @@
+version: "3.1"
+
+rules:
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: product search
+  steps:
+  - intent: ask_product
+  - action: utter_ask_brand
+
+- rule: search for product by name
+  steps:
+  - intent: inform_brand
+  - action: query_brand_type
+
+- rule: search for all products
+  steps:
+  - intent: find_all_products
+  - action: query_all_products
+
+- rule: search for all transactions
+  steps:
+  - intent: find_all_transactions
+  - action: query_all_transactions
+
+- rule: testing for custom action
+  steps:
+  - intent: test_custom_action
+  - action: custom_action_test
+
+- rule: show all information
+  steps:
+  - intent: find_all_info
+  - action: query_all_information
+
+- rule: show all brands available
+  steps:
+    - intent: find_all_brands
+    - action: query_unique_brands
+
+- rule: find all info by tag
+  steps:
+  - intent: find_tag
+  - action: query_tag
+
+- rule: find all transactions by tag
+  steps:
+  - intent: find_transactions_tag
+  - action: query_transactions_tag
+
+- rule: find all products by tag
+  steps:
+  - intent: find_products_tag
+  - action: query_products_tag
+
+- rule: page redirect
+  steps:
+  - intent: page_redirect
+  - action: redirect_page
+
+- rule: are you ok
+  steps:
+  - intent: default_text
+  - action: utter_are_you_ok
+
+- rule: close bot
+  steps:
+  - intent: end_bot
+  - action: utter_end_bot
+
+- rule: close app
+  steps:
+  - intent: end_app
+  - action: utter_end_app

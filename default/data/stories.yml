@@ -1,0 +1,44 @@
+version: "3.1"
+
+stories:
+
+- story: robot qn
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+
+- story: finding products
+  steps:
+  - intent: ask_product
+  - action: utter_ask_brand
+  - intent: inform_brand
+    entities:
+    - resource_type: dove
+  - action: query_brand_type
+
+- story: finding all products
+  steps:
+  - intent: find_all_products
+  - action: query_all_products
+
+- story: finding all transactions
+  steps:
+  - intent: find_all_transactions
+  - action: query_all_transactions
+
+- story: find all info based on tag
+  steps:
+  - intent: find_tag
+    entities:
+    - resource_type: Shower
+  - action: query_tag
+
+- story: find all transactions by tag
+  steps:
+  - intent: find_transactions_tag
+    entities:
+    - resource_type: Shower
+  - action: query_transactions_tag

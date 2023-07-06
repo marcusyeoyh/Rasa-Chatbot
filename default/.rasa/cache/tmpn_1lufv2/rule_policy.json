@@ -1,0 +1,28 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inform\"}}]": "query_brand_type",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inform\"}}, {\"prev_action\": {\"action_name\": \"query_brand_type\"}, \"user\": {\"intent\": \"inform\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bot_challenge\"}}]": "utter_iamabot",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"bot_challenge\"}}, {\"prev_action\": {\"action_name\": \"utter_iamabot\"}, \"user\": {\"intent\": \"bot_challenge\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"ask_product\"}}]": "utter_ask_brand",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"ask_product\"}}, {\"prev_action\": {\"action_name\": \"utter_ask_brand\"}, \"user\": {\"intent\": \"ask_product\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"find_all_transactions\"}}]": "query_all_transactions",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"find_all_transactions\"}}, {\"prev_action\": {\"action_name\": \"query_all_transactions\"}, \"user\": {\"intent\": \"find_all_transactions\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"test_custom_action\"}}]": "custom_action_test",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"test_custom_action\"}}, {\"prev_action\": {\"action_name\": \"custom_action_test\"}, \"user\": {\"intent\": \"test_custom_action\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"find_all_products\"}}]": "query_all_products",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"find_all_products\"}}, {\"prev_action\": {\"action_name\": \"query_all_products\"}, \"user\": {\"intent\": \"find_all_products\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {},
+    "rules_not_in_stories": [
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"test_custom_action\"}}]",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"test_custom_action\"}}, {\"prev_action\": {\"action_name\": \"custom_action_test\"}, \"user\": {\"intent\": \"test_custom_action\"}}]",
+      "predicting default action with intent session_start"
+    ]
+  }
+}

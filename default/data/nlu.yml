@@ -1,0 +1,221 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - hey how are you!
+    - how are you?
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+
+- intent: ask_product
+  examples: |
+    - what are some products available
+    - i want to ask about certain products
+    - show me products
+    - find me a product
+    - i am looking for a product
+    - find me some products
+    - what are the available products
+    - find me another product
+    - i am looking for another product
+    - i want more products from different brands
+    - show me more products
+
+- intent: find_all_products
+  examples: |
+    - find me all products in the database
+    - show me all the products
+    - i want to see all the products available
+    - give me all products
+    - show all products
+    - all products
+
+- intent: find_all_transactions
+  examples: |
+    - find me all transactions in the database
+    - show me all the transactions
+    - i want to see all the transactions available
+    - give me all transactions
+    - show all transactions
+    - all transactions
+
+- intent: inform_brand
+  examples: |
+    - i would like a product by [Dove](brand_type)
+    - [Dove](brand_type) brand
+    - the brand should be [Komoto](brand_type)
+    - [Gatsby](brand_type)
+    - the brand i am looking for is [mercedes](brand_type)
+    - find me products by [gatsby](brand_type)
+    - i want to find products by [gatsby](brand_type)
+
+- intent: test_custom_action
+  examples: |
+    - test custom action
+    - testing custom action
+    - custom action
+    - im doing a custom action test
+
+- intent: find_all_info
+  examples: |
+    - show me all information
+    - i want to see all information available
+    - display all info
+    - give me all info
+    - show all
+    - display all
+    - represent all information as a cohesive table
+    - please give me all the information
+    - display everything
+
+- intent: find_all_brands
+  examples: |
+    - show all brands
+    - i want to see all unique brands
+    - show all unique brands
+    - give me all the brands
+    - give me all unique brands
+    - what are some brands available
+    - all brands available
+    - what brands are there
+    - give me a list of all brands
+    - list all brands
+    - all brands
+
+- intent: find_transactions_tag
+  examples: |
+    - i would like to find all transactions with the tag [Shower](tag_type)
+    - i would like to find all transactions with the tag [Body](tag_type)
+    - give all [Shower](tag_type) tag transactions
+    - give all [Body](tag_type) tag transactions
+    - [Shower](tag_type) tag transactions
+    - [Body](tag_type) tag transactions
+    - display all [Shower](tag_type) tag transactions
+    - display all [Body](tag_type) tag transactions
+
+- intent: find_products_tag
+  examples: |
+    - i would like to find all products with the tag [Shower](tag_type)
+    - i would like to find all products with the tag [Body](tag_type)
+    - give all [Shower](tag_type) tag products
+    - give all [Body](tag_type) tag products
+    - [Shower](tag_type) tag products
+    - [Body](tag_type) tag products
+    - display all [Shower](tag_type) tag products
+    - display all [Body](tag_type) tag products
+
+
+- intent: find_tag
+  examples: |
+    - i would like to find all information with the tag [Shower](tag_type)
+    - i would like to find all information with the tag [Body](tag_type)
+    - give all [Shower](tag_type) tag information
+    - give all [Body](tag_type) tag information
+    - [Shower](tag_type) tag information
+    - [Body](tag_type) tag information
+    - display all [Shower](tag_type) tag information
+    - display all [Body](tag_type) tag information
+    - show all [Shower](tag_type) tag
+    - show all [Body](tag_type) tag
+
+- intent: page_redirect
+  examples: |
+    - please show me ProductID [1](page_number) page
+    - redirect me to ProductID [1](page_number) page
+    - show me ProductID [1](page_number) page
+    - show me the page for ProductID [1](page_number)
+    - i want to see ProductID [1](page_number) page
+    - display ProductID [1](page_number) page
+    - give me ProductID [1](page_number) page
+    - show me information on ProductID [1](page_number)
+    - please show me [ProductID1](page_number) page
+    - redirect me to [ProductID1](page_number) page
+    - show me [ProductID1](page_number) page
+    - i want to see [ProductID1](page_number) page
+    - display [ProductID1](page_number) page
+    - give me [ProductID1](page_number) page
+    - show me information on [ProductID1](page_number)
+    - show me the page for [ProductID1](page_number)
+    - ProductID [1](page_number) page
+    - [ProductID1](page_number) page
+
+- intent: default_text
+  examples: |
+    - Enter query here...
+
+- intent: end_bot
+  examples: |
+    - close bot
+    - close chatbot
+    - end bot
+    - end chatbot
+    - please close bot
+    - please close chatbot
+    - i would like to close the chatbot
+    - i would like to close the bot
+
+- intent: end_app
+  examples: |
+    - close app
+    - close application
+    - end app
+    - end application
+    - please close app
+    - please close application
+    - i would like to close the application
+    - i would like to close the app
+
+    
+- lookup: brand_type
+  examples: |
+    - dove
+    - komoto
+    - gatsby
+    - mercedes
+
+- lookup: page_number
+  examples: |
+    - ProductID1
+    - ProductID2
+    - ProductID3
+    - ProductID4
+    - ProductID5
+    - ProductID6
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6

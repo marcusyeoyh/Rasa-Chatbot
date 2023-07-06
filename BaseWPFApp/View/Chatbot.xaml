@@ -1,0 +1,75 @@
+﻿<Window x:Class="BaseWPFApp.View.Chatbot"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Chatbot" Height="600" Width="800" Foreground="#FFEAEAEA" Background="#FF151515" FontSize="14" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen" FontFamily="Segoe UI">
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="UserMessageBubbleStyle">
+            <Setter Property="Background" Value="#007AFF"/>
+            <!-- Blue color for user messages -->
+            <Setter Property="MaxWidth" Value="400"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="Border" x:Key="BotMessageBubbleStyle">
+            <Setter Property="Background" Value="#34C759"/>
+            <!-- Green color for bot messages -->
+            <Setter Property="MaxWidth" Value="400"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="ProductButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6C757D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Width" Value="120"/>
+            <!-- Adjust the width as desired -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#495057"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer x:Name="ResultsScroller" Grid.Row="0" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
+            <StackPanel x:Name="ResultsPanel" Margin="10"/>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Margin="0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <TextBox x:Name="txtInput" Height="35" Width="600" Padding="5,5,5,5" Text="Enter query here ..." PreviewMouseDown="TxtInput_PreviewMouseDown" GotFocus="TxtInput_GotFocus" PreviewKeyDown="TxtInput_PreviewKeyDown"/>
+                <Button x:Name="btnGo" Width="80" Padding="5,5,5,5" Content="Send" Click="BtnGo_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
