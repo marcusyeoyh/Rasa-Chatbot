@@ -9,7 +9,7 @@
                 <lvc:LineSeries Title="Quantity" Values="{Binding ChartData}" DataLabels="True" LineSmoothness="0.3" />
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Transaction Date" LabelFormatter="{Binding Converter={StaticResource DateAxisLabelConverter}}" />
+                <lvc:Axis Title="Transaction Date" />
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Quantity" />

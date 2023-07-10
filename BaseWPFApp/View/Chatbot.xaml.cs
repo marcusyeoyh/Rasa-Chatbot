@@ -198,11 +198,36 @@ namespace BaseWPFApp.View
 
             // Add the message bubble to the ResultsPanel
             ResultsPanel.Children.Add(messageBubble);
+
+            if (table.Columns.Contains("ProductId") && table.Columns.Contains("Quantity") && table.Columns.Contains("TransactionDate"))
+            {
+                DisplayChartButton(table);
+            }
+
             if (table.Columns.Contains("ProductId"))
             {
                 DisplayProductButtons(table);
             }
             // Display buttons for each unique ProductId
+        }
+
+        private void DisplayChartButton(DataTable table)
+        {
+            Button chartButton = new Button();
+            chartButton.Content = "View Chart";
+            chartButton.Style = FindResource("ProductButtonStyle") as Style;
+            chartButton.Click += (sender, e) =>
+            {
+                OpenChartWindow(table);
+            };
+
+            ResultsPanel.Children.Add(chartButton);
+        }
+
+        private void OpenChartWindow(DataTable table)
+        {
+            LineGraphWindow lineGraphWindow = new LineGraphWindow(table);
+            lineGraphWindow.ShowDialog();
         }
 
         private void DisplayProductButtons(DataTable table)

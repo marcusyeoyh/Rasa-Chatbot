@@ -4,7 +4,6 @@ using System.Data;
 using System.Windows;
 using LiveCharts;
 using LiveCharts.Wpf;
-using LiveCharts.Wpf.Charts.Base;
 
 namespace BaseWPFApp.View
 {
@@ -13,52 +12,25 @@ namespace BaseWPFApp.View
         public LineGraphWindow(DataTable table)
         {
             InitializeComponent();
-            DisplayLineGraph(table);
+            ChartData = ExtractChartData(table);
+            DataContext = this;
         }
 
-        public void DisplayLineGraph(DataTable table)
-        {
-            // Clear existing series from the chart
-            chart.Series.Clear();
+        public ChartValues<int> ChartData { get; set; }
 
-            // Iterate over each unique ProductID
-            var productIds = new HashSet<string>();
+        private ChartValues<int> ExtractChartData(DataTable table)
+        {
+            var chartData = new ChartValues<int>();
+
             foreach (DataRow row in table.Rows)
             {
-                string productId = row["ProductID"].ToString();
-                if (!string.IsNullOrEmpty(productId) && !productIds.Contains(productId))
+                if (int.TryParse(row["Quantity"].ToString(), out int quantity))
                 {
-                    productIds.Add(productId);
-
-                    // Create a new LineSeries for the current ProductID
-                    var lineSeries = new LineSeries
-                    {
-                        Title = "ProductID " + productId,
-                        Values = new ChartValues<int>(),
-                        PointGeometry = null // Disable point markers
-                    };
-
-                    // Iterate over the rows with the current ProductID and add data points to the LineSeries
-                    foreach (DataRow dataRow in table.Rows)
-                    {
-                        if (dataRow["ProductID"].ToString() == productId)
-                        {
-                            int quantity;
-                            DateTime transactionDate;
-                            // Extract the Quantity and TransactionDate values from the DataRow
-                            if (int.TryParse(dataRow["Quantity"].ToString(), out quantity) &&
-                                DateTime.TryParse(dataRow["TransactionDate"].ToString(), out transactionDate))
-                            {
-                                // Add data point to the LineSeries
-                                lineSeries.Values.Add(quantity);
-                            }
-                        }
-                    }
-
-                    // Add the LineSeries to the chart
-                    chart.Series.Add(lineSeries);
+                    chartData.Add(quantity);
                 }
             }
+
+            return chartData;
         }
     }
 }
