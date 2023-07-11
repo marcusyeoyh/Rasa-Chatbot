@@ -39,14 +39,15 @@ namespace BaseWPFApp.View
                     .Where(row => row.Field<string>("ProductId") == productId)
                     .Select(row => new
                     {
-                        TransactionDate = row.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd"),
+                        TransactionDate = row.Field<DateTime>("TransactionDate"),
                         Quantity = row.Field<int>("Quantity")
-                    });
+                    })
+                    .OrderBy(dataPoint => dataPoint.TransactionDate); // Sort the data points by TransactionDate
 
                 foreach (var dataPoint in dataPoints)
                 {
                     series.Values.Add(new ObservableValue(dataPoint.Quantity));
-                    chart.AxisX[0].Labels.Add(dataPoint.TransactionDate);
+                    chart.AxisX[0].Labels.Add(dataPoint.TransactionDate.ToString("yyyy-MM-dd"));
                 }
 
                 chart.Series.Add(series);
