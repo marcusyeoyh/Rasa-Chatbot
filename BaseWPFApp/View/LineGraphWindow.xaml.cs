@@ -30,7 +30,7 @@ namespace BaseWPFApp.View
             {
                 var series = new LineSeries
                 {
-                    Title = productId,
+                    Title = "ProductID"+productId,
                     Values = new ChartValues<ObservablePoint>(),
                     DataLabels = true
                 };
