@@ -247,9 +247,6 @@ namespace BaseWPFApp.View
 
             ResultsPanel.Children.Add(chartButton);
         }
-
-
-
         private void OpenChartWindow(DataTable table)
         {
             LineGraphWindow lineGraphWindow = new LineGraphWindow(table);

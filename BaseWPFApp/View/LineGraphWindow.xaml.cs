@@ -22,7 +22,7 @@ namespace BaseWPFApp.View
                 var series = new LineSeries
                 {
                     Title = productId,
-                    Values = new ChartValues<ObservableValue>(),
+                    Values = new ChartValues<ObservablePoint>(),
                     DataLabels = true
                 };
 
@@ -37,14 +37,29 @@ namespace BaseWPFApp.View
 
                 foreach (var dataPoint in dataPoints)
                 {
-                    series.Values.Add(new ObservableValue(dataPoint.Quantity));
+                    series.Values.Add(new ObservablePoint(dataPoint.TransactionDate.Ticks, dataPoint.Quantity));
                 }
 
                 chart.Series.Add(series);
             }
+
+            chart.AxisX.Add(new Axis
+            {
+                Title = "Transaction Date",
+                LabelFormatter = Formatter
+            });
+
+            chart.AxisY.Add(new Axis
+            {
+                Title = "Quantity"
+            });
         }
 
         // Custom label formatter for X-axis to format dates
-        public Func<double, string> Formatter { get; } = value => new DateTime((long)value).ToString("yyyy-MM-dd");
+        public Func<double, string> Formatter { get; } = value =>
+        {
+            var dateTime = new DateTime((long)value);
+            return dateTime.ToString("yyyy-MM-dd");
+        };
     }
 }
