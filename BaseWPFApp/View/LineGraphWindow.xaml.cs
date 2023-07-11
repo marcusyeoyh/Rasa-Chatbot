@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Configurations;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace BaseWPFApp.View
@@ -14,77 +14,73 @@ namespace BaseWPFApp.View
         public LineGraphWindow(DataTable table)
         {
             InitializeComponent();
-            DisplayLineGraph(table);
-        }
+            DataContext = this;
 
-        private void DisplayLineGraph(DataTable table)
-        {
-            // Clear existing series from the chart
-            chart.Series.Clear();
+            var productIds = table.AsEnumerable().Select(row => row.Field<string>("ProductId")).Distinct();
 
-            // Create a dictionary to store the LineSeries for each unique ProductID
-            var seriesDictionary = new Dictionary<string, LineSeries>();
+            var mapper = Mappers.Xy<ObservablePoint>()
+                .X(point => point.X)
+                .Y(point => point.Y);
 
-            // Configure the mapper to extract DateTime and int values from the data table
-            var mapper = Mappers.Xy<DateModel>()
-                .X(dateModel => dateModel.DateTime.Ticks)
-                .Y(dateModel => dateModel.Value);
+            Charting.For<ObservablePoint>(mapper);
 
-            Charting.For<DateModel>(mapper);
+            Axis xAxis = null; // Variable to store the correct X-axis
 
-            foreach (DataRow row in table.Rows)
+            foreach (var productId in productIds)
             {
-                string productId = row["ProductID"].ToString();
-                if (!string.IsNullOrEmpty(productId))
+                var series = new LineSeries
                 {
-                    // Check if LineSeries for the current ProductID already exists
-                    if (!seriesDictionary.ContainsKey(productId))
+                    Title = productId,
+                    Values = new ChartValues<ObservablePoint>(),
+                    DataLabels = true
+                };
+
+                var dataPoints = table.AsEnumerable()
+                    .Where(row => row.Field<string>("ProductId") == productId)
+                    .Select(row => new ObservablePoint(
+                        row.Field<DateTime>("TransactionDate").Ticks,
+                        row.Field<int>("Quantity")))
+                    .OrderBy(point => point.X);
+
+                series.Values.AddRange(dataPoints);
+
+                chart.Series.Add(series);
+
+                // Store the X-axis from the first series
+                if (xAxis == null)
+                {
+                    xAxis = new Axis
                     {
-                        // Create a new LineSeries for the current ProductID
-                        var lineSeries = new LineSeries
+                        Title = "Transaction Date",
+                        LabelFormatter = Formatter,
+                        Separator = new Separator
                         {
-                            Title = "ProductID " + productId,
-                            Values = new ChartValues<DateModel>(),
-                            PointGeometry = DefaultGeometries.Circle, // Set the dot shape
-                            PointGeometrySize = 6, // Set the dot size
-                            LineSmoothness = 0, // Disable line smoothing
-                            Fill = Brushes.Transparent // Set the dot fill color to transparent
-                        };
+                            Step = TimeSpan.FromDays(1).Ticks * 30, // One month step
+                            IsEnabled = true
+                        }
+                    };
 
-                        // Add the LineSeries to the dictionary
-                        seriesDictionary.Add(productId, lineSeries);
-                    }
-
-                    // Retrieve the LineSeries for the current ProductID from the dictionary
-                    var series = seriesDictionary[productId];
-
-                    if (int.TryParse(row["Quantity"].ToString(), out int quantity) &&
-                        DateTime.TryParse(row["TransactionDate"].ToString(), out DateTime transactionDate))
-                    {
-                        // Create a new DateModel instance with the extracted values
-                        var dateModel = new DateModel
-                        {
-                            DateTime = transactionDate,
-                            Value = quantity
-                        };
-
-                        // Add the DateModel to the LineSeries values
-                        series.Values.Add(dateModel);
-                    }
+                    chart.AxisX.Add(xAxis);
                 }
             }
 
-            // Add all LineSeries to the chart
-            foreach (var series in seriesDictionary.Values)
-            {
-                chart.Series.Add(series);
-            }
-        }
-    }
+            // Remove the unwanted axis
+            chart.AxisX.Remove(chart.AxisX.First(axis => axis != xAxis));
 
-    public class DateModel
-    {
-        public DateTime DateTime { get; set; }
-        public int Value { get; set; }
+            chart.AxisY.Add(new Axis
+            {
+                Title = "Quantity"
+            });
+        }
+
+        // Custom label formatter for X-axis to format dates
+        public Func<double, string> Formatter { get; } = value =>
+        {
+            if (value < DateTime.MinValue.Ticks)
+                return string.Empty;
+
+            var dateTime = new DateTime((long)value);
+            return dateTime.ToString("yyyy-MM-dd");
+        };
     }
 }

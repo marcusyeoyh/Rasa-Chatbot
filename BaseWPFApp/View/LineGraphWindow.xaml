@@ -5,15 +5,11 @@
         Title="Line Graph Window" Height="450" Width="800">
     <Grid>
         <lvc:CartesianChart x:Name="chart">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries Title="Quantity" Values="{Binding ChartData}" DataLabels="True" LineSmoothness="0.3" />
-            </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Transaction Date" />
+                <lvc:Axis Title="Transaction Date"
+                          LabelsRotation="45"
+                          LabelFormatter="{Binding Formatter}" />
             </lvc:CartesianChart.AxisX>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Quantity" />
-            </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
     </Grid>
 </Window>

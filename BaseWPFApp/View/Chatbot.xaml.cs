@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -213,17 +214,39 @@ namespace BaseWPFApp.View
 
         private void DisplayChartButton(DataTable table)
         {
+            DataTable chartTable = new DataTable();
+            chartTable.Columns.Add("ProductId", typeof(string));
+            chartTable.Columns.Add("Quantity", typeof(int));
+            chartTable.Columns.Add("TransactionDate", typeof(DateTime));
+
+            foreach (DataRow row in table.Rows)
+            {
+                string productId = row["ProductId"].ToString();
+                int quantity = Convert.ToInt32(row["Quantity"]);
+
+                // Convert the TransactionDate using DateTime.ParseExact() or DateTime.TryParseExact()
+                string transactionDateString = row["TransactionDate"].ToString();
+                DateTime transactionDate;
+                if (DateTime.TryParseExact(transactionDateString, "yyyy-MM-dd", null, DateTimeStyles.None, out transactionDate))
+                {
+                    chartTable.Rows.Add(productId, quantity, transactionDate);
+                }
+                else
+                {
+                    // Handle invalid date format, if necessary
+                }
+            }
+
             Button chartButton = new Button();
             chartButton.Content = "View Chart";
             chartButton.Style = FindResource("ProductButtonStyle") as Style;
             chartButton.Click += (sender, e) =>
             {
-                OpenChartWindow(table);
+                OpenChartWindow(chartTable);
             };
 
             ResultsPanel.Children.Add(chartButton);
         }
-
         private void OpenChartWindow(DataTable table)
         {
             LineGraphWindow lineGraphWindow = new LineGraphWindow(table);
