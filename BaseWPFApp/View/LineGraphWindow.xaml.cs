@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using LiveCharts;
+using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
@@ -17,6 +18,14 @@ namespace BaseWPFApp.View
 
             var productIds = table.AsEnumerable().Select(row => row.Field<string>("ProductId")).Distinct();
 
+            var mapper = Mappers.Xy<ObservablePoint>()
+                .X(point => point.X)
+                .Y(point => point.Y);
+
+            Charting.For<ObservablePoint>(mapper);
+
+            Axis xAxis = null; // Variable to store the correct X-axis
+
             foreach (var productId in productIds)
             {
                 var series = new LineSeries
@@ -28,26 +37,35 @@ namespace BaseWPFApp.View
 
                 var dataPoints = table.AsEnumerable()
                     .Where(row => row.Field<string>("ProductId") == productId)
-                    .Select(row => new
-                    {
-                        TransactionDate = row.Field<DateTime>("TransactionDate"),
-                        Quantity = row.Field<int>("Quantity")
-                    })
-                    .OrderBy(dataPoint => dataPoint.TransactionDate);
+                    .Select(row => new ObservablePoint(
+                        row.Field<DateTime>("TransactionDate").Ticks,
+                        row.Field<int>("Quantity")))
+                    .OrderBy(point => point.X);
 
-                foreach (var dataPoint in dataPoints)
-                {
-                    series.Values.Add(new ObservablePoint(dataPoint.TransactionDate.Ticks, dataPoint.Quantity));
-                }
+                series.Values.AddRange(dataPoints);
 
                 chart.Series.Add(series);
+
+                // Store the X-axis from the first series
+                if (xAxis == null)
+                {
+                    xAxis = new Axis
+                    {
+                        Title = "Transaction Date",
+                        LabelFormatter = Formatter,
+                        Separator = new Separator
+                        {
+                            Step = TimeSpan.FromDays(1).Ticks * 30, // One month step
+                            IsEnabled = true
+                        }
+                    };
+
+                    chart.AxisX.Add(xAxis);
+                }
             }
 
-            chart.AxisX.Add(new Axis
-            {
-                Title = "Transaction Date",
-                LabelFormatter = Formatter
-            });
+            // Remove the unwanted axis
+            chart.AxisX.Remove(chart.AxisX.First(axis => axis != xAxis));
 
             chart.AxisY.Add(new Axis
             {
@@ -58,6 +76,9 @@ namespace BaseWPFApp.View
         // Custom label formatter for X-axis to format dates
         public Func<double, string> Formatter { get; } = value =>
         {
+            if (value < DateTime.MinValue.Ticks)
+                return string.Empty;
+
             var dateTime = new DateTime((long)value);
             return dateTime.ToString("yyyy-MM-dd");
         };
