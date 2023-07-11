@@ -16,7 +16,11 @@ namespace BaseWPFApp.View
             DataContext = this; // Set the window as the DataContext to enable data binding
 
             chart.AxisX.Clear(); // Clear any existing AxisX items before adding a new one
-            chart.AxisX.Add(new Axis { Title = "Transaction Date", LabelFormatter = Formatter });
+            chart.AxisX.Add(new Axis
+            {
+                Title = "Transaction Date",
+                Labels = new ChartValues<string>()
+            });
 
             // Create series for each unique ProductId
             var productIds = table.AsEnumerable().Select(row => row.Field<string>("ProductId")).Distinct();
@@ -35,13 +39,14 @@ namespace BaseWPFApp.View
                     .Where(row => row.Field<string>("ProductId") == productId)
                     .Select(row => new
                     {
-                        TransactionDate = row.Field<DateTime>("TransactionDate"),
+                        TransactionDate = row.Field<DateTime>("TransactionDate").ToString("yyyy-MM-dd"),
                         Quantity = row.Field<int>("Quantity")
                     });
 
                 foreach (var dataPoint in dataPoints)
                 {
                     series.Values.Add(new ObservableValue(dataPoint.Quantity));
+                    chart.AxisX[0].Labels.Add(dataPoint.TransactionDate);
                 }
 
                 chart.Series.Add(series);
