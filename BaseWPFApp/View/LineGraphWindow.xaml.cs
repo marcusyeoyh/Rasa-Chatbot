@@ -13,16 +13,8 @@ namespace BaseWPFApp.View
         public LineGraphWindow(DataTable table)
         {
             InitializeComponent();
-            DataContext = this; // Set the window as the DataContext to enable data binding
+            DataContext = this;
 
-            chart.AxisX.Clear(); // Clear any existing AxisX items before adding a new one
-            chart.AxisX.Add(new Axis
-            {
-                Title = "Transaction Date",
-                Labels = new ChartValues<string>()
-            });
-
-            // Create series for each unique ProductId
             var productIds = table.AsEnumerable().Select(row => row.Field<string>("ProductId")).Distinct();
 
             foreach (var productId in productIds)
@@ -34,7 +26,6 @@ namespace BaseWPFApp.View
                     DataLabels = true
                 };
 
-                // Add data points to the series based on the specified ProductId
                 var dataPoints = table.AsEnumerable()
                     .Where(row => row.Field<string>("ProductId") == productId)
                     .Select(row => new
@@ -42,12 +33,11 @@ namespace BaseWPFApp.View
                         TransactionDate = row.Field<DateTime>("TransactionDate"),
                         Quantity = row.Field<int>("Quantity")
                     })
-                    .OrderBy(dataPoint => dataPoint.TransactionDate); // Sort the data points by TransactionDate
+                    .OrderBy(dataPoint => dataPoint.TransactionDate);
 
                 foreach (var dataPoint in dataPoints)
                 {
                     series.Values.Add(new ObservableValue(dataPoint.Quantity));
-                    chart.AxisX[0].Labels.Add(dataPoint.TransactionDate.ToString("yyyy-MM-dd"));
                 }
 
                 chart.Series.Add(series);
