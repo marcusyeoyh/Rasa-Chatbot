@@ -1,6 +1,6 @@
 [![Repository Status](https://img.shields.io/badge/Repository%20Status-Maintained-dark%20green.svg)](https://github.com/marcusyeoyh)
 [![Author](https://img.shields.io/badge/Author-Marcus%20Yeo-blue.svg)](https://www.linkedin.com/in/AVS1508/)
-[![Latest Release](https://img.shields.io/badge/Latest%20Release-5%20July%202023-yellow.svg)](https://github.com/marcusyeoyh/Rasa-Chatbot/commit/master)
+[![Latest Release](https://img.shields.io/badge/Latest%20Release-18%20July%202023-yellow.svg)](https://github.com/marcusyeoyh/Rasa-Chatbot/commit/master)
 
 # Rasa ChatBot
 
@@ -78,7 +78,7 @@ This file also contains the various slots and entities that are required for the
 
 ## TODO
 
-1. Implement Charting function
+1. Implement working staff and customer modes with different privileges afforded to both accounts
 
 ## References
 * [Rasa Documentation](https://rasa.com/docs/)
