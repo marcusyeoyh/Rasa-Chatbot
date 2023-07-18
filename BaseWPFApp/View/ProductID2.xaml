@@ -2,13 +2,43 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:BaseWPFApp.View"
-      Title="ProductID2" Background="Black">
+      Title="ProductID1" Background="Black">
 
     <Grid>
-        <TextBlock Text="ProductID 2" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+        <!-- Header -->
         <Button x:Name="BackButton" Content="&#8592;" HorizontalAlignment="Left" VerticalAlignment="Top"
                 Margin="10" Width="40" Height="40"
                 Click="BackButton_Click"/>
+
+        <!-- Product Details -->
+        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Product Image -->
+            <Image Source="C:\Users\u\Desktop\Intern 2023\BaseWPFApp\Photographs\Dove_conditioner.jpg" Width="200" Height="204" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+            <!-- Product Details -->
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="Dove Hair Conditioner" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="16" Foreground="White" HorizontalAlignment="Center" Margin="10">
+                    <Run Text="ProductID: 2"/>
+                    <Run Text="&#9;"/> <!-- Tab character -->
+                    <Run Text="Price: $19.00"/>
+                </TextBlock>
+                <TextBlock Text="Enriched with a coconut and cookie fragrance, everything about Dove Kids Care 2 in 1 Detangler and Refresher Spray is designed to appeal to kids. It’s specially made to detangle curly hair and naturally textured hair with its nourishing formula, and is made for kids with coily, curly and wavy hair. Our multi-tasking spray can be also used to refresh coils and curls between washes.
+
+Dove Kids Care 2 in 1 Detangler and Refresher Spray is formulated without parabens and phthalates. The dermatologist-tested, hypoallergenic formula
+
+Infused with shea butter and coconut oil, Dove Kids Care 2 in 1 Detangler and Refresher Spray nourishes coily, curly and wavy hair, while the irresistibly scented coconut and cookie fragrance makes styling a lot more enjoyable for you both.
+
+Designed to bring fun to hair washing, the packaging features Zuri, who kids will recognise from the bestselling book and award-winning film Hair Love. " 
+                           FontSize="16" Foreground="White" TextWrapping="Wrap" Margin="10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
+ 

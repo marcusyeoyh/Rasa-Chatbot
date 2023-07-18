@@ -5,10 +5,38 @@
       Title="ProductID1" Background="Black">
 
     <Grid>
-        <TextBlock Text="ProductID 1" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+        <!-- Header -->
         <Button x:Name="BackButton" Content="&#8592;" HorizontalAlignment="Left" VerticalAlignment="Top"
                 Margin="10" Width="40" Height="40"
                 Click="BackButton_Click"/>
+
+        <!-- Product Details -->
+        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Adjusted height to accommodate the image size -->
+                <RowDefinition Height="Auto"/>
+                <!-- Adjusted height to accommodate the text size -->
+                <RowDefinition Height="Auto"/>
+                <!-- Added row for the subheader -->
+            </Grid.RowDefinitions>
+
+            <!-- Product Image -->
+            <Image Source="C:\Users\u\Desktop\Intern 2023\BaseWPFApp\Photographs\Dove_shampoo.jpg" Width="200" Height="300" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+            <!-- Product Details -->
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="Dove Hair Shampoo" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="16" Foreground="White" HorizontalAlignment="Center" Margin="10">
+                    <Run Text="ProductID: 1"/>
+                    <Run Text="&#9;"/> <!-- Tab character -->
+                    <Run Text="Price: $15.00"/>
+                </TextBlock>
+                <TextBlock Text="Our hair goes through a lot, from changes in the weather to everyday heat styling. The secret to caring for damaged hair? Dove Intensive Repair Shampoo and Conditioner for damaged hair – specially made to target and revive damaged hair, restoring its healthy look and feel. 
+
+When used with the Dove Intense Repair Conditioner, this reviving shampoo gives you complete care that works in harmony with your hair. Made with Dove Bio-Nourish Complex, our reparative shampoo and conditioner for damaged hair work together to precisely target damaged hair on the surface and replenish it with a blend of protein, lipid and nutrients. After just one use, these clever hair repair products help to stop 98% of daily hair damage.* " 
+                           FontSize="16" Foreground="White" TextWrapping="Wrap" Margin="10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

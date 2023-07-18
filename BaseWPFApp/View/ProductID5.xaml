@@ -1,14 +1,41 @@
-﻿<Page x:Class="BaseWPFApp.View.ProductID5"
+﻿<Page x:Class="BaseWPFApp.View.ProductID5 "
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:BaseWPFApp.View"
-      Title="ProductID5" Background="Black">
+      Title="ProductID1" Background="Black">
 
     <Grid>
-        <TextBlock Text="ProductID 5" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+        <!-- Header -->
         <Button x:Name="BackButton" Content="&#8592;" HorizontalAlignment="Left" VerticalAlignment="Top"
                 Margin="10" Width="40" Height="40"
                 Click="BackButton_Click"/>
+
+        <!-- Product Details -->
+        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Product Image -->
+            <Image Source="C:\Users\u\Desktop\Intern 2023\BaseWPFApp\Photographs\facewash.jpg" Width="104" Height="204" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <!-- Product Details -->
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="Body Lotion" FontSize="24" FontWeight="Bold" Foreground=" White" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="16" Foreground="White" HorizontalAlignment="Center" Margin="10">
+                    <Run Text="ProductID: 5"/>
+                    <Run Text="&#9;"/>
+                    <Run Text="Price: $11.00"/>
+                </TextBlock>
+                <TextBlock Text="Smooth and powerful effect with cool sensation.
+6 Multi functions (oil protect, brightening, deep cleansing, moisturizing, acne care, scrub polish).
+Triple whitening system.
+Contains yam bean extract to keep skin fair." 
+                           FontSize="16" Foreground="White" TextWrapping="Wrap" Margin="10" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
+ 
