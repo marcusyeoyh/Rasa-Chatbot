@@ -1,7 +1,7 @@
 ﻿<Page x:Class="BaseWPFApp.View.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="MainPage" Background="Black">
+      Title="Main Page" Background="Black">
     <Page.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#007AFF"/>
@@ -52,16 +52,16 @@
             <Button Content="Product 3" Style="{StaticResource ButtonStyle}" Click="Page3Button_Click"/>
             <Button Content="Product 4" Style="{StaticResource ButtonStyle}" Click="Page4Button_Click"/>
             <Button Content="Product 5" Style="{StaticResource ButtonStyle}" Click="Page5Button_Click"/>
-            <!-- Add more buttons for other pages -->
         </StackPanel>
 
         <!-- Main content area -->
         <Grid Grid.Column="1">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,40">
                 <TextBlock Text="Superstore Page" FontSize="36" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Height="64"/>
+                <TextBlock x:Name="WelcomeTextBlock" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Height="40"/>
                 <TextBlock Text="Looking for something? Click me below! ↓↓↓" FontSize="24" Foreground="White" HorizontalAlignment="Center" Height="59"/>
                 <Button x:Name="btnChatbot" Content="Chatbot" HorizontalAlignment="Center"
-                        Style="{StaticResource ButtonStyle}" Click="btnChatbot_Click" RenderTransformOrigin="0.5,0.5" Height="54" Width="115">
+            Style="{StaticResource ButtonStyle}" Click="btnChatbot_Click" RenderTransformOrigin="0.5,0.5" Height="54" Width="115">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -72,6 +72,7 @@
                     </Button.RenderTransform>
                 </Button>
             </StackPanel>
+
         </Grid>
 
         <!-- Frame for displaying pages -->

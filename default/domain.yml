@@ -1,6 +1,7 @@
 version: "3.1"
 
 intents:
+  - set_user_mode
   - greet
   - goodbye
   - bot_challenge
@@ -21,12 +22,20 @@ intents:
   - find_top
 
 entities:
+  - user_mode
   - brand_type
   - tag_type
   - page_number
   - top_hits
 
 slots:
+  user_mode:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: user_mode
+
   brand_type:
     type: text
     influence_conversation: true

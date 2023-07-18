@@ -65,3 +65,5 @@ C:\Users\u\Desktop\Intern 2023\BaseWPFApp\obj\Debug\net7.0-windows\View\ProductI
 C:\Users\u\Desktop\Intern 2023\BaseWPFApp\obj\Debug\net7.0-windows\View\ProductID5.baml
 C:\Users\u\Desktop\Intern 2023\BaseWPFApp\obj\Debug\net7.0-windows\View\LineGraphWindow.baml
 C:\Users\u\Desktop\Intern 2023\BaseWPFApp\obj\Debug\net7.0-windows\View\LineGraphWindow.g.cs
+C:\Users\u\Desktop\Intern 2023\BaseWPFApp\obj\Debug\net7.0-windows\View\LoginPage.baml
+C:\Users\u\Desktop\Intern 2023\BaseWPFApp\obj\Debug\net7.0-windows\View\LoginPage.g.cs

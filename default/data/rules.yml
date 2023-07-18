@@ -2,6 +2,11 @@ version: "3.1"
 
 rules:
 
+- rule: Set user mode
+  steps:
+  - intent: set_user_mode
+  - action: utter_greet
+
 - rule: Say 'I am a bot' anytime the user challenges
   steps:
   - intent: bot_challenge

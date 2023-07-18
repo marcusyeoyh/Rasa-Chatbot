@@ -1,6 +1,12 @@
 version: "3.1"
 
 nlu:
+
+- intent: set_user_mode
+  examples: |
+    - set user mode as [Customer](user_mode)
+    - set user mode as [Staff](user_mode)
+
 - intent: greet
   examples: |
     - hey
@@ -224,7 +230,12 @@ nlu:
     - display top [3](top_hits) transactions
     - show top [3](top_hits)
     - display top [3](top_hits)
-    
+
+- lookup: user_mode
+  examples: |
+   - Customer
+   - Staff
+  
 - lookup: brand_type
   examples: |
     - dove

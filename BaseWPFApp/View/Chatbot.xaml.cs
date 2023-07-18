@@ -19,12 +19,24 @@ namespace BaseWPFApp.View
     {
         private bool isUserMessage = true; // Flag to track if the message is from the user or the bot
         private Frame mainPageFrame;
+        private string user_mode;
 
-        public Chatbot(Frame mainPageFrame)
+        public Chatbot(Frame mainPageFrame, string user_mode)
         {
             InitializeComponent();
             this.mainPageFrame = mainPageFrame; // Store the MainPage instance
+            this.user_mode = user_mode;
+            ConnectToRasaChatbot("set user mode as " + user_mode);
         }
+
+        private async void ConnectToRasaChatbot(string message)
+        {
+            var response = await QueryRasaChatbot(message);
+
+            DisplayMessage(response, false);
+            isUserMessage = !isUserMessage;
+        }
+
 
         private async void BtnGo_Click(object sender, RoutedEventArgs e)
         {
@@ -114,7 +126,7 @@ namespace BaseWPFApp.View
                             {
                                 // Extract the page number from the response
                                 string pageNumber = text.Replace("Redirect", "").Trim();
-                                pageNumber = pageNumber.Replace("(", "").Replace(")", "").Trim(); // Remove brackets
+                                pageNumber = pageNumber.Replace("(", "").Replace(")", "").Trim();
 
                                 // Construct the page name based on the number
                                 string pageName = "ProductID" + pageNumber;
@@ -140,7 +152,6 @@ namespace BaseWPFApp.View
                             {
                                 DisplayTextMessage("Please confirm if you would like to close the APP:", false);
 
-                                // Add a button to close the entire app
                                 Button closeAppButton = new Button();
                                 closeAppButton.Content = "Close App";
                                 closeAppButton.Style = FindResource("ProductButtonStyle") as Style;
@@ -209,7 +220,6 @@ namespace BaseWPFApp.View
             {
                 DisplayProductButtons(table);
             }
-            // Display buttons for each unique ProductId
         }
 
         private void DisplayChartButton(DataTable table)
@@ -224,16 +234,11 @@ namespace BaseWPFApp.View
                 string productId = row["ProductId"].ToString();
                 int quantity = Convert.ToInt32(row["Quantity"]);
 
-                // Convert the TransactionDate using DateTime.ParseExact() or DateTime.TryParseExact()
                 string transactionDateString = row["TransactionDate"].ToString();
                 DateTime transactionDate;
                 if (DateTime.TryParseExact(transactionDateString, "yyyy-MM-dd", null, DateTimeStyles.None, out transactionDate))
                 {
                     chartTable.Rows.Add(productId, quantity, transactionDate);
-                }
-                else
-                {
-                    // Handle invalid date format, if necessary
                 }
             }
 
