@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Photographs\body_lotion.jpg" />
+    <None Remove="Photographs\Dove_conditioner.jpg" />
+    <None Remove="Photographs\Dove_shampoo.jpg" />
+    <None Remove="Photographs\facewash.jpg" />
+    <None Remove="Photographs\kodomo_shampoo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -19,6 +27,14 @@
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Photographs\body_lotion.jpg" />
+    <Resource Include="Photographs\Dove_conditioner.jpg" />
+    <Resource Include="Photographs\Dove_shampoo.jpg" />
+    <Resource Include="Photographs\facewash.jpg" />
+    <Resource Include="Photographs\kodomo_shampoo.jpg" />
   </ItemGroup>
 
 </Project>

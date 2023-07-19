@@ -22,27 +22,27 @@ namespace BaseWPFApp.View
 
         private void Page1Button_Click(object sender, RoutedEventArgs e)
         {
-            mainPageFrame.Navigate(new ProductID1());
+            mainPageFrame.Navigate(new ProductID1(userMode));
         }
 
         private void Page2Button_Click(object sender, RoutedEventArgs e)
         {
-            mainPageFrame.Navigate(new ProductID2());
+            mainPageFrame.Navigate(new ProductID2(userMode));
         }
 
         private void Page3Button_Click(object sender, RoutedEventArgs e)
         {
-            mainPageFrame.Navigate(new ProductID3());
+            mainPageFrame.Navigate(new ProductID3(userMode));
         }
 
         private void Page4Button_Click(object sender, RoutedEventArgs e)
         {
-            mainPageFrame.Navigate(new ProductID4());
+            mainPageFrame.Navigate(new ProductID4(userMode));
         }
 
         private void Page5Button_Click(object sender, RoutedEventArgs e)
         {
-            mainPageFrame.Navigate(new ProductID5());
+            mainPageFrame.Navigate(new ProductID5(userMode));
         }
     }
 }

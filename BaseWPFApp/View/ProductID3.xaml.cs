@@ -7,15 +7,17 @@ namespace BaseWPFApp.View
 {
     public partial class ProductID3 : Page
     {
-        public ProductID3()
+        private string userMode;
+
+        public ProductID3(string userMode)
         {
             InitializeComponent();
+            this.userMode = userMode;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Redirect to MainWindow.xaml
-            NavigationService?.Navigate(new Uri("/View/MainWindow.xaml", UriKind.Relative));
+            NavigationService?.Navigate(new MainPage(userMode));
         }
     }
 }

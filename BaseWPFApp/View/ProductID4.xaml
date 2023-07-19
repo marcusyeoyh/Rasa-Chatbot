@@ -19,7 +19,7 @@
             </Grid.RowDefinitions>
 
             <!-- Product Image -->
-            <Image Source="C:\Users\u\Desktop\Intern 2023\BaseWPFApp\Photographs\kodomo_shampoo.jpg" Width="104" Height="204" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image Source="../Photographs/kodomo_shampoo.jpg" Width="104" Height="204" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             <!-- Product Details -->
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10">

@@ -84,7 +84,7 @@ namespace BaseWPFApp.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BaseWPFApp;component/view/chatbot.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BaseWPFApp;V1.0.0.0;component/view/chatbot.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\Chatbot.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
