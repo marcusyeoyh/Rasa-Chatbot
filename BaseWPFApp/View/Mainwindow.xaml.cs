@@ -6,6 +6,7 @@ namespace BaseWPFApp.View
     public partial class MainPage : Page
     {
         private string userMode;
+        private Chatbot chatbotWindow;
 
         public MainPage(string userMode)
         {
@@ -16,8 +17,11 @@ namespace BaseWPFApp.View
 
         private void btnChatbot_Click(object sender, RoutedEventArgs e)
         {
-            Chatbot chatbotWindow = new Chatbot(mainPageFrame, userMode); // Pass the MainPage's Frame instance
-            chatbotWindow.Show();
+            if (chatbotWindow == null || !chatbotWindow.IsVisible)
+            {
+                chatbotWindow = new Chatbot(mainPageFrame, userMode); // Pass the MainPage's Frame instance
+                chatbotWindow.Show();
+            }
         }
 
         private void Page1Button_Click(object sender, RoutedEventArgs e)
@@ -43,6 +47,21 @@ namespace BaseWPFApp.View
         private void Page5Button_Click(object sender, RoutedEventArgs e)
         {
             mainPageFrame.Navigate(new ProductID5(userMode));
+        }
+
+        private void ChangeUserModeButton_Click(object sender, RoutedEventArgs e)
+        {
+            CloseChatbotWindow();
+            mainPageFrame.Navigate(new LoginPage());
+        }
+        private void CloseChatbotWindow()
+        {
+            // Check if Chatbot window is open and close it if needed
+            if (chatbotWindow != null && chatbotWindow.IsVisible)
+            {
+                chatbotWindow.Close();
+                chatbotWindow = null;
+            }
         }
     }
 }
