@@ -441,7 +441,7 @@ class QueryAllProducts(Action):
             cursor = connection.cursor()
 
             # Step 1: Fetch the brand options from the database
-            select_query = f"SELECT TransactionID, Quantity FROM StoreTransaction GROUP BY TransactionID ORDER BY Quantity DESC LIMIT {slot_value}"
+            select_query = f"SELECT * FROM StoreTransaction ORDER BY Quantity DESC LIMIT {slot_value}"
             cursor.execute(select_query)
             rows = cursor.fetchall()
 
