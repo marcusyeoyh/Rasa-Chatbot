@@ -34,7 +34,7 @@ namespace BaseWPFApp.View
             var response = await QueryRasaChatbot(message);
 
             DisplayMessage(response, false);
-            isUserMessage = !isUserMessage;
+            isUserMessage = true;
         }
 
 
@@ -288,6 +288,25 @@ namespace BaseWPFApp.View
             }
         }
 
+        private void NavigateToPageOnMainPage(string pageName)
+        {
+            // Assuming your page types are in the same namespace as the MainPage
+            string pageNamespace = typeof(MainPage).Namespace;
+
+            // Construct the fully qualified type name of the page
+            string pageTypeName = $"{pageNamespace}.{pageName}";
+
+            // Get the Type object representing the page
+            Type pageType = Type.GetType(pageTypeName);
+
+            // Create an instance of the page using reflection
+            object pageInstance = Activator.CreateInstance(pageType, user_mode);
+
+            // Navigate to the page on the MainPage's Frame
+            mainPageFrame.Navigate(pageInstance);
+        }
+
+
 
         private void DisplayTextMessage(string text, bool isUserMessage)
         {
@@ -354,23 +373,7 @@ namespace BaseWPFApp.View
             return table;
         }
 
-        private void NavigateToPageOnMainPage(string pageName)
-        {
-            // Assuming your page types are in the same namespace as the MainPage
-            string pageNamespace = typeof(MainPage).Namespace;
 
-            // Construct the fully qualified type name of the page
-            string pageTypeName = $"{pageNamespace}.{pageName}";
-
-            // Get the Type object representing the page
-            Type pageType = Type.GetType(pageTypeName);
-
-            // Create an instance of the page using reflection
-            object pageInstance = Activator.CreateInstance(pageType);
-
-            // Navigate to the page on the MainPage's Frame
-            mainPageFrame.Navigate(pageInstance);
-        }
 
         private void TxtInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
