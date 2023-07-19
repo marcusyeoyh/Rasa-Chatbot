@@ -5,13 +5,16 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import sqlite3
 from sqlite3 import Error
-from prettytable import PrettyTable
 from fuzzywuzzy import process
 
 config_file = os.path.join(os.path.dirname(__file__), "config.json")
 with open(config_file, "r") as file:
     config = json.load(file)
     database_path = config["database_path"]
+
+def is_user_mode_customer(tracker: Tracker) -> bool:
+    user_mode = tracker.get_slot("user_mode")
+    return user_mode == "Customer"
 
 class QueryBrandType(Action):
     def name(self) -> Text:
@@ -73,28 +76,31 @@ class QueryAllTransactions(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
+        if is_user_mode_customer(tracker):
+            dispatcher.utter_message(text="As a customer, you do not have privileged assess to this query.")
+        else:
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
 
-        # Step 1: Fetch the brand options from the database
-        select_query = f"SELECT * FROM StoreTransaction"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
+            # Step 1: Fetch the brand options from the database
+            select_query = f"SELECT * FROM StoreTransaction"
+            cursor.execute(select_query)
+            rows = cursor.fetchall()
 
-        rows_dict = []
-        for row in rows:
-            row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
-            rows_dict.append(row_dict)
+            rows_dict = []
+            for row in rows:
+                row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+                rows_dict.append(row_dict)
 
-        response_data = {"table": rows_dict}
+            response_data = {"table": rows_dict}
 
-        # Convert response_data to JSON string
-        response_json = json.dumps(response_data)
+            # Convert response_data to JSON string
+            response_json = json.dumps(response_data)
 
-        dispatcher.utter_message(text=response_json)
+            dispatcher.utter_message(text=response_json)
 
-        # Step 4: Close the connection
-        connection.close()
+            # Step 4: Close the connection
+            connection.close()
 
         return []
 
@@ -158,28 +164,31 @@ class QueryAllInformation(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
+        if is_user_mode_customer(tracker):
+            dispatcher.utter_message(text="As a customer, you do not have privileged assess to this query.")
+        else:
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
 
-        # Step 1: Fetch the brand options from the database
-        select_query = f"SELECT * FROM ProductItem, StoreTransaction WHERE ProductItem.ProductID = StoreTransaction.ProductID"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
+            # Step 1: Fetch the brand options from the database
+            select_query = f"SELECT * FROM ProductItem, StoreTransaction WHERE ProductItem.ProductID = StoreTransaction.ProductID"
+            cursor.execute(select_query)
+            rows = cursor.fetchall()
 
-        rows_dict = []
-        for row in rows:
-            row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
-            rows_dict.append(row_dict)
+            rows_dict = []
+            for row in rows:
+                row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+                rows_dict.append(row_dict)
 
-        response_data = {"table": rows_dict}
+            response_data = {"table": rows_dict}
 
-        # Convert response_data to JSON string
-        response_json = json.dumps(response_data)
+            # Convert response_data to JSON string
+            response_json = json.dumps(response_data)
 
-        dispatcher.utter_message(text=response_json)
+            dispatcher.utter_message(text=response_json)
 
-        # Step 4: Close the connection
-        connection.close()
+            # Step 4: Close the connection
+            connection.close()
 
         return []
     
@@ -228,42 +237,45 @@ class QueryTag(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
+        if is_user_mode_customer(tracker):
+            dispatcher.utter_message(text="As a customer, you do not have privileged assess to this query.")
+        else:
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
 
-        slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
-        slot_name = "Tag"
+            slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
+            slot_name = "Tag"
 
-        # Step 1: Fetch the brand options from the database
-        select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
-        brand_options = [row[0] for row in rows]
-
-        # Step 2: Use fuzzy matching to find the closest matching brand
-        closest_match = process.extractOne(slot_value, brand_options)
-
-        if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
-            slot_value = closest_match[0]
-            select_query = f"SELECT * FROM ProductItem, StoreTransaction WHERE ProductItem.{slot_name} = '{slot_value}' AND StoreTransaction.{slot_name} = '{slot_value}'"
+            # Step 1: Fetch the brand options from the database
+            select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
             cursor.execute(select_query)
             rows = cursor.fetchall()
+            brand_options = [row[0] for row in rows]
 
-            rows_dict = []
-            for row in rows:
-                row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
-                rows_dict.append(row_dict)
+            # Step 2: Use fuzzy matching to find the closest matching brand
+            closest_match = process.extractOne(slot_value, brand_options)
 
-            response_data = {"table": rows_dict}
-        else:
-            response_data = None
+            if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+                slot_value = closest_match[0]
+                select_query = f"SELECT * FROM ProductItem, StoreTransaction WHERE ProductItem.{slot_name} = '{slot_value}' AND StoreTransaction.{slot_name} = '{slot_value}'"
+                cursor.execute(select_query)
+                rows = cursor.fetchall()
 
-        response_json = json.dumps(response_data)
+                rows_dict = []
+                for row in rows:
+                    row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+                    rows_dict.append(row_dict)
 
-        dispatcher.utter_message(text=response_json)
+                response_data = {"table": rows_dict}
+            else:
+                response_data = None
 
-        # Step 4: Close the connection
-        connection.close()
+            response_json = json.dumps(response_data)
+
+            dispatcher.utter_message(text=response_json)
+
+            # Step 4: Close the connection
+            connection.close()
 
         return []
     
@@ -277,42 +289,45 @@ class QueryTransactionsTag(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
+        if is_user_mode_customer(tracker):
+            dispatcher.utter_message(text="As a customer, you do not have privileged assess to this query.")
+        else:
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
 
-        slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
-        slot_name = "Tag"
+            slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
+            slot_name = "Tag"
 
-        # Step 1: Fetch the brand options from the database
-        select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
-        brand_options = [row[0] for row in rows]
-
-        # Step 2: Use fuzzy matching to find the closest matching brand
-        closest_match = process.extractOne(slot_value, brand_options)
-
-        if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
-            slot_value = closest_match[0]
-            select_query = f"SELECT * FROM StoreTransaction WHERE {slot_name} = '{slot_value}'"
+            # Step 1: Fetch the brand options from the database
+            select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
             cursor.execute(select_query)
             rows = cursor.fetchall()
+            brand_options = [row[0] for row in rows]
 
-            rows_dict = []
-            for row in rows:
-                row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
-                rows_dict.append(row_dict)
+            # Step 2: Use fuzzy matching to find the closest matching brand
+            closest_match = process.extractOne(slot_value, brand_options)
 
-            response_data = {"table": rows_dict}
-        else:
-            response_data = None
+            if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+                slot_value = closest_match[0]
+                select_query = f"SELECT * FROM StoreTransaction WHERE {slot_name} = '{slot_value}'"
+                cursor.execute(select_query)
+                rows = cursor.fetchall()
 
-        response_json = json.dumps(response_data)
+                rows_dict = []
+                for row in rows:
+                    row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+                    rows_dict.append(row_dict)
 
-        dispatcher.utter_message(text=response_json)
+                response_data = {"table": rows_dict}
+            else:
+                response_data = None
 
-        # Step 4: Close the connection
-        connection.close()
+            response_json = json.dumps(response_data)
+
+            dispatcher.utter_message(text=response_json)
+
+            # Step 4: Close the connection
+            connection.close()
 
         return []
     
@@ -326,42 +341,45 @@ class QueryProductsTag(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
+        if is_user_mode_customer(tracker):
+            dispatcher.utter_message(text="As a customer, you do not have privileged assess to this query.")
+        else:
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
 
-        slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
-        slot_name = "Tag"
+            slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
+            slot_name = "Tag"
 
-        # Step 1: Fetch the brand options from the database
-        select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
-        brand_options = [row[0] for row in rows]
-
-        # Step 2: Use fuzzy matching to find the closest matching brand
-        closest_match = process.extractOne(slot_value, brand_options)
-
-        if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
-            slot_value = closest_match[0]
-            select_query = f"SELECT * FROM ProductItem WHERE {slot_name} = '{slot_value}'"
+            # Step 1: Fetch the brand options from the database
+            select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
             cursor.execute(select_query)
             rows = cursor.fetchall()
+            brand_options = [row[0] for row in rows]
 
-            rows_dict = []
-            for row in rows:
-                row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
-                rows_dict.append(row_dict)
+            # Step 2: Use fuzzy matching to find the closest matching brand
+            closest_match = process.extractOne(slot_value, brand_options)
 
-            response_data = {"table": rows_dict}
-        else:
-            response_data = None
+            if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+                slot_value = closest_match[0]
+                select_query = f"SELECT * FROM ProductItem WHERE {slot_name} = '{slot_value}'"
+                cursor.execute(select_query)
+                rows = cursor.fetchall()
 
-        response_json = json.dumps(response_data)
+                rows_dict = []
+                for row in rows:
+                    row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+                    rows_dict.append(row_dict)
 
-        dispatcher.utter_message(text=response_json)
+                response_data = {"table": rows_dict}
+            else:
+                response_data = None
 
-        # Step 4: Close the connection
-        connection.close()
+            response_json = json.dumps(response_data)
+
+            dispatcher.utter_message(text=response_json)
+
+            # Step 4: Close the connection
+            connection.close()
 
         return []
     
@@ -415,28 +433,31 @@ class QueryAllProducts(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        slot_value = next(tracker.get_latest_entity_values("top_hits"), None)
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
+        if is_user_mode_customer(tracker):
+            dispatcher.utter_message(text="As a customer, you do not have privileged assess to this query.")
+        else:
+            slot_value = next(tracker.get_latest_entity_values("top_hits"), None)
+            connection = sqlite3.connect(database_path)
+            cursor = connection.cursor()
 
-        # Step 1: Fetch the brand options from the database
-        select_query = f"SELECT TransactionID, Quantity FROM StoreTransaction GROUP BY TransactionID ORDER BY Quantity DESC LIMIT {slot_value}"
-        cursor.execute(select_query)
-        rows = cursor.fetchall()
+            # Step 1: Fetch the brand options from the database
+            select_query = f"SELECT TransactionID, Quantity FROM StoreTransaction GROUP BY TransactionID ORDER BY Quantity DESC LIMIT {slot_value}"
+            cursor.execute(select_query)
+            rows = cursor.fetchall()
 
-        rows_dict = []
-        for row in rows:
-            row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
-            rows_dict.append(row_dict)
+            rows_dict = []
+            for row in rows:
+                row_dict = {description[0]: value for description, value in zip(cursor.description, row)}
+                rows_dict.append(row_dict)
 
-        response_data = {"table": rows_dict}
+            response_data = {"table": rows_dict}
 
-        # Convert response_data to JSON string
-        response_json = json.dumps(response_data)
+            # Convert response_data to JSON string
+            response_json = json.dumps(response_data)
 
-        dispatcher.utter_message(text=response_json)
+            dispatcher.utter_message(text=response_json)
 
-        # Step 4: Close the connection
-        connection.close()
+            # Step 4: Close the connection
+            connection.close()
 
         return []
