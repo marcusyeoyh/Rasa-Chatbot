@@ -1,6 +1,6 @@
 [![Repository Status](https://img.shields.io/badge/Repository%20Status-Maintained-dark%20green.svg)](https://github.com/marcusyeoyh)
 [![Author](https://img.shields.io/badge/Author-Marcus%20Yeo-blue.svg)](https://www.linkedin.com/in/AVS1508/)
-[![Latest Release](https://img.shields.io/badge/Latest%20Release-18%20July%202023-yellow.svg)](https://github.com/marcusyeoyh/Rasa-Chatbot/commit/master)
+[![Latest Release](https://img.shields.io/badge/Latest%20Release-20%20July%202023-yellow.svg)](https://github.com/marcusyeoyh/Rasa-Chatbot/commit/master)
 
 # Rasa ChatBot
 
@@ -14,8 +14,8 @@ rasa run actions
 ```
 2. Run Rasa REST API to allow connection from WPF App
 ```
-rasa run -m <path_to_your_model> --enable-api --cors "*" //For regular use
-rasa run -m <path_to_your_model> --enable-api --cors "*" --debug //For debugging purposes
+rasa run -m 20230719-171951-excited-screen.tar.gz --enable-api --cors "*" //For regular use
+rasa run -m 20230719-171951-excited-screen.tar.gz --enable-api --cors "*" --debug //For debugging purposes
 ```
 3. Run WPF App
 * Make sure that server endpoint is correct
