@@ -306,8 +306,6 @@ namespace BaseWPFApp.View
             mainPageFrame.Navigate(pageInstance);
         }
 
-
-
         private void DisplayTextMessage(string text, bool isUserMessage)
         {
             if (IsJsonString(text))
@@ -324,6 +322,8 @@ namespace BaseWPFApp.View
                 TextBlock messageText = new TextBlock();
                 messageText.Text = text;
                 messageText.Foreground = Brushes.White;
+                messageText.TextWrapping = TextWrapping.Wrap;
+                messageText.Padding = new Thickness(5);
 
                 // Add the TextBlock to the message bubble
                 messageBubble.Child = messageText;
