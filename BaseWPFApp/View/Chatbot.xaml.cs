@@ -20,12 +20,16 @@ namespace BaseWPFApp.View
         private bool isUserMessage = true; // Flag to track if the message is from the user or the bot
         private Frame mainPageFrame;
         private string user_mode;
+        private bool isBotSetupComplete = false;
 
         public Chatbot(Frame mainPageFrame, string user_mode)
         {
             InitializeComponent();
             this.mainPageFrame = mainPageFrame; // Store the MainPage instance
             this.user_mode = user_mode;
+            txtInput.IsReadOnly = true; // Disable the search bar
+            btnGo.IsEnabled = false; // Disable the "Go" button
+            DisplayTextMessage("Welcome to the chatbot! Please wait while the bot starts up!", false);
             ConnectToRasaChatbot("set user mode as " + user_mode);
         }
 
@@ -35,6 +39,8 @@ namespace BaseWPFApp.View
 
             DisplayMessage(response, false);
             isUserMessage = true;
+            txtInput.IsReadOnly = false;
+            btnGo.IsEnabled = true;
         }
 
 
