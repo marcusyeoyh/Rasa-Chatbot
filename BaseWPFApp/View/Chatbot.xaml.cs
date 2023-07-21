@@ -136,7 +136,7 @@ namespace BaseWPFApp.View
 
                                 // Construct the page name based on the number
                                 string pageName = "ProductID" + pageNumber;
-
+                                DisplayTextMessage("Redirecting to ProductID" + pageNumber + " product page now!", false);
                                 NavigateToPageOnMainPage(pageName);
                             }
                             else if (text.StartsWith("Please confirm if you would like to close the chatbot:"))
