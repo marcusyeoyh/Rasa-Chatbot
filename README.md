@@ -7,6 +7,11 @@
 This Repo is to store progress for a conversational chatbot which queries a SQLite database using the Rasa framework
 
 ## Operation instructions
+### Operating Full WPF App with BAT File (22/7/23)
+1. Run BAT File in [default](https://github.com/marcusyeoyh/Rasa-Chatbot/tree/main/default) folder
+
+2. Run BaseWPFApp.exe
+
 ### Operating Full WPF App
 1. Run actions server for custom actions
 ```
@@ -17,8 +22,7 @@ rasa run actions
 rasa run -m 20230722-110206-citron-rivulet.tar.gz --enable-api --cors "*" //For regular use
 rasa run -m 20230722-110206-citron-rivulet.tar.gz --enable-api --cors "*" --debug //For debugging purposes
 ```
-3. Run WPF App
-* Make sure that server endpoint is correct
+3. Run BaseWPFApp.exe
 
 ### Testing Rasa Backend
 1. Run actions server
