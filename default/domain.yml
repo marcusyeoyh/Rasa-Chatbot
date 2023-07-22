@@ -20,6 +20,9 @@ intents:
   - end_bot
   - end_app
   - find_top
+  - purpose
+  - feeling_good
+  - feeling_bad
 
 entities:
   - user_mode
@@ -75,13 +78,22 @@ responses:
   - text: "It appears that you have input the default text. Perhaps you would like to ask a question?"
 
   utter_iamabot:
-  - text: "I am not a human, I am a Rasa Chatbot!"
+  - text: "You are speaking to a Chatbot created using the Rasa framework!"
 
   utter_end_bot:
   - text: "Please confirm if you would like to close the chatbot:"
   
   utter_end_app:
   - text: "Please confirm if you would like to close the APP:"
+
+  utter_feeling_good_response:
+  - text: "That's great to hear! Is there anything I can help you with?"
+
+  utter_feeling_bad_response:
+  - text: "I'm sorry to hear that. Let me know if there's anything I can do to help."
+
+  utter_table_of_contents:
+  - text: "I am an assistant chatbot that can help you with your queries regarding this superstore! Some questions you can ask include what are the brands available and asking about a product!"
 
 actions: 
   - query_brand_type

@@ -25,25 +25,50 @@ nlu:
     - hey how are you!
     - how are you?
 
-- intent: goodbye
-  examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
-
 - intent: bot_challenge
   examples: |
     - are you a bot?
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
+    - what are you?
+    - who am i talking with
+    - what am i talking to
+    - who am i speaking with
+    - what am i speaking to    
+
+- intent: purpose
+  examples: |
+    - what can you do?
+    - what is your purpose
+    - what are some questions that i can ask?
+    - what queries can you handle
+    - what are you made to do?
+    - what can be done here?   
+
+- intent: feeling_good
+  examples: |
+    - im feeling great!
+    - im good!
+    - im great!
+    - i think im okay
+    - i guess im okay
+    - i guess im okay
+    - i am great
+    - i am good
+
+- intent: feeling_bad
+  examples: |
+    - im feeling bad!
+    - im not good!
+    - im not great!
+    - i think im sick
+    - i guess im sick
+    - i am not okay
+    - i dead
+    - i am feeling down
+    - i dont feel good
+    - i feel upset
 
 - intent: ask_product
   examples: |

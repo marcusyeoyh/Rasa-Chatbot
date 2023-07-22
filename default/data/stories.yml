@@ -9,6 +9,30 @@ stories:
   - intent: bot_challenge
   - action: utter_iamabot
 
+- story: what can you do?
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: purpose
+  - action: utter_table_of_contents
+
+- story: greet conversation
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - checkpoint: check_feeling
+
+- story: handle feeling_good
+  steps:
+  - checkpoint: check_feeling
+  - intent: feeling_good
+  - action: utter_feeling_good_response
+
+- story: handle feeling_bad
+  steps:
+  - checkpoint: check_feeling
+  - intent: feeling_bad
+  - action: utter_feeling_bad_response
 
 - story: finding products
   steps:

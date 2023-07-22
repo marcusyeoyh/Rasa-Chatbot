@@ -1,0 +1,18 @@
+[
+  {
+    "name": "user_mode",
+    "pattern": "(\\bCustomer\\b|\\bStaff\\b)"
+  },
+  {
+    "name": "brand_type",
+    "pattern": "(\\bdove\\b|\\bkomoto\\b|\\bgatsby\\b|\\bmercedes\\b)"
+  },
+  {
+    "name": "page_number",
+    "pattern": "(\\bProductID1\\b|\\bProductID2\\b|\\bProductID3\\b|\\bProductID4\\b|\\bProductID5\\b|\\bProductID6\\b|\\b1\\b|\\b2\\b|\\b3\\b|\\b4\\b|\\b5\\b|\\b6\\b)"
+  },
+  {
+    "name": "top_hits",
+    "pattern": "(\\b1\\b|\\b2\\b|\\b3\\b|\\b4\\b|\\b5\\b|\\b6\\b)"
+  }
+]

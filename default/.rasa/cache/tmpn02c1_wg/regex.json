@@ -1,6 +1,0 @@
-[
-  {
-    "name": "brand_type",
-    "pattern": "(\\bdove\\b|\\bkomoto\\b|\\bgatsby\\b)"
-  }
-]
