@@ -7,6 +7,8 @@ import sqlite3
 from sqlite3 import Error
 from fuzzywuzzy import process
 
+confidence_rating = 80
+
 config_file = os.path.join(os.path.dirname(__file__), "config.json")
 with open(config_file, "r") as file:
     config = json.load(file)
@@ -41,7 +43,7 @@ class QueryBrandType(Action):
         # Step 2: Use fuzzy matching to find the closest matching brand
         closest_match = process.extractOne(slot_value, brand_options)
 
-        if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+        if closest_match[1] >= confidence_rating:  # Similarity threshold for a valid match
             slot_value = closest_match[0]
             select_query = f"SELECT * FROM ProductItem WHERE {slot_name} = '{slot_value}'"
             cursor.execute(select_query)
@@ -82,7 +84,6 @@ class QueryAllTransactions(Action):
             connection = sqlite3.connect(database_path)
             cursor = connection.cursor()
 
-            # Step 1: Fetch the brand options from the database
             select_query = f"SELECT * FROM StoreTransaction"
             cursor.execute(select_query)
             rows = cursor.fetchall()
@@ -99,7 +100,6 @@ class QueryAllTransactions(Action):
 
             dispatcher.utter_message(text=response_json)
 
-            # Step 4: Close the connection
             connection.close()
 
         return []
@@ -118,7 +118,6 @@ class QueryAllProducts(Action):
         connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
-        # Step 1: Fetch the brand options from the database
         select_query = f"SELECT * FROM ProductItem"
         cursor.execute(select_query)
         rows = cursor.fetchall()
@@ -130,12 +129,10 @@ class QueryAllProducts(Action):
 
         response_data = {"table": rows_dict}
 
-        # Convert response_data to JSON string
         response_json = json.dumps(response_data)
 
         dispatcher.utter_message(text=response_json)
 
-        # Step 4: Close the connection
         connection.close()
 
         return []
@@ -170,7 +167,6 @@ class QueryAllInformation(Action):
             connection = sqlite3.connect(database_path)
             cursor = connection.cursor()
 
-            # Step 1: Fetch the brand options from the database
             select_query = f"SELECT * FROM ProductItem, StoreTransaction WHERE ProductItem.ProductID = StoreTransaction.ProductID"
             cursor.execute(select_query)
             rows = cursor.fetchall()
@@ -187,7 +183,6 @@ class QueryAllInformation(Action):
 
             dispatcher.utter_message(text=response_json)
 
-            # Step 4: Close the connection
             connection.close()
 
         return []
@@ -222,7 +217,6 @@ class QueryAllBrands(Action):
 
         dispatcher.utter_message(text=response_json)
 
-        # Step 4: Close the connection
         connection.close()
 
         return []
@@ -246,16 +240,14 @@ class QueryTag(Action):
             slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
             slot_name = "Tag"
 
-            # Step 1: Fetch the brand options from the database
             select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
             cursor.execute(select_query)
             rows = cursor.fetchall()
             brand_options = [row[0] for row in rows]
 
-            # Step 2: Use fuzzy matching to find the closest matching brand
             closest_match = process.extractOne(slot_value, brand_options)
 
-            if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+            if closest_match[1] >= confidence_rating:  # Minimum similarity threshold for a valid match
                 slot_value = closest_match[0]
                 select_query = f"SELECT * FROM ProductItem, StoreTransaction WHERE ProductItem.{slot_name} = '{slot_value}' AND StoreTransaction.{slot_name} = '{slot_value}'"
                 cursor.execute(select_query)
@@ -274,7 +266,6 @@ class QueryTag(Action):
 
             dispatcher.utter_message(text=response_json)
 
-            # Step 4: Close the connection
             connection.close()
 
         return []
@@ -298,16 +289,14 @@ class QueryTransactionsTag(Action):
             slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
             slot_name = "Tag"
 
-            # Step 1: Fetch the brand options from the database
             select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
             cursor.execute(select_query)
             rows = cursor.fetchall()
             brand_options = [row[0] for row in rows]
 
-            # Step 2: Use fuzzy matching to find the closest matching brand
             closest_match = process.extractOne(slot_value, brand_options)
 
-            if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+            if closest_match[1] >= confidence_rating:  # Minimum similarity threshold for a valid match
                 slot_value = closest_match[0]
                 select_query = f"SELECT * FROM StoreTransaction WHERE {slot_name} = '{slot_value}'"
                 cursor.execute(select_query)
@@ -326,7 +315,6 @@ class QueryTransactionsTag(Action):
 
             dispatcher.utter_message(text=response_json)
 
-            # Step 4: Close the connection
             connection.close()
 
         return []
@@ -350,16 +338,14 @@ class QueryProductsTag(Action):
             slot_value = next(tracker.get_latest_entity_values("tag_type"), None)
             slot_name = "Tag"
 
-            # Step 1: Fetch the brand options from the database
             select_query = f"SELECT DISTINCT {slot_name} FROM ProductItem"
             cursor.execute(select_query)
             rows = cursor.fetchall()
             brand_options = [row[0] for row in rows]
 
-            # Step 2: Use fuzzy matching to find the closest matching brand
             closest_match = process.extractOne(slot_value, brand_options)
 
-            if closest_match[1] >= 80:  # Minimum similarity threshold for a valid match
+            if closest_match[1] >= confidence_rating:  # Minimum similarity threshold for a valid match
                 slot_value = closest_match[0]
                 select_query = f"SELECT * FROM ProductItem WHERE {slot_name} = '{slot_value}'"
                 cursor.execute(select_query)
@@ -378,7 +364,6 @@ class QueryProductsTag(Action):
 
             dispatcher.utter_message(text=response_json)
 
-            # Step 4: Close the connection
             connection.close()
 
         return []
@@ -440,7 +425,6 @@ class QueryAllProducts(Action):
             connection = sqlite3.connect(database_path)
             cursor = connection.cursor()
 
-            # Step 1: Fetch the brand options from the database
             select_query = f"SELECT * FROM StoreTransaction ORDER BY Quantity DESC LIMIT {slot_value}"
             cursor.execute(select_query)
             rows = cursor.fetchall()
@@ -452,12 +436,10 @@ class QueryAllProducts(Action):
 
             response_data = {"table": rows_dict}
 
-            # Convert response_data to JSON string
             response_json = json.dumps(response_data)
 
             dispatcher.utter_message(text=response_json)
 
-            # Step 4: Close the connection
             connection.close()
 
         return []
