@@ -62,7 +62,7 @@ namespace BaseWPFApp.View
 
                 // Display bot response on the left side
                 DisplayMessage(response, isUserMessage);
-                isUserMessage = !isUserMessage; // Toggle the flag
+                isUserMessage = !isUserMessage;
             }
 
             // Clear the search box and restore the default message
@@ -143,7 +143,7 @@ namespace BaseWPFApp.View
                             {
                                 DisplayTextMessage("Please confirm if you would like to close the chatbot:", false);
 
-                                // Add a button to close the chatbot window
+                                // Button to close the chatbot window
                                 Button closeButton = new Button();
                                 closeButton.Content = "Close Chatbot";
                                 closeButton.Style = FindResource("ProductButtonStyle") as Style;
@@ -296,19 +296,14 @@ namespace BaseWPFApp.View
 
         private void NavigateToPageOnMainPage(string pageName)
         {
-            // Assuming your page types are in the same namespace as the MainPage
             string pageNamespace = typeof(MainPage).Namespace;
 
-            // Construct the fully qualified type name of the page
             string pageTypeName = $"{pageNamespace}.{pageName}";
 
-            // Get the Type object representing the page
             Type pageType = Type.GetType(pageTypeName);
 
-            // Create an instance of the page using reflection
             object pageInstance = Activator.CreateInstance(pageType, user_mode);
 
-            // Navigate to the page on the MainPage's Frame
             mainPageFrame.Navigate(pageInstance);
         }
 

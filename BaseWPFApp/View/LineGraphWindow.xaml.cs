@@ -46,7 +46,6 @@ namespace BaseWPFApp.View
 
                 chart.Series.Add(series);
 
-                // Store the X-axis from the first series
                 if (xAxis == null)
                 {
                     xAxis = new Axis
